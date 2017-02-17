@@ -1,0 +1,24 @@
+---
+init:
+    table1: [0,1,2,3,4,5,6,7,8,9,10]
+steps:
+    - instr: <for i:$table1>
+    - function:
+        name: mongodb_handler.printit
+        parameters:
+            - $i
+        options:
+        return:
+    - instr: <rof>
+on_except:
+    - exception:
+        class: ZeroDivisionError
+      handler:
+        function:
+            name: exception_handlers.DivisionByZero_Hdlr.execute
+            parameters:
+                - $i
+            options:
+            return:
+                - i
+...
